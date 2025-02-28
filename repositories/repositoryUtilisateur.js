@@ -12,7 +12,7 @@ class UtilisateurRepository {
     }
   }
   // Trouver les utilisateurs
-  async getUtilisateurs() {
+  async findUtilisateurs() {
     try {
       return await Utilisateur.find();
     } catch (err) {
