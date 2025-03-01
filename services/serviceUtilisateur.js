@@ -48,6 +48,7 @@ class UtilisateurService {
       );
       if (!motDePasseValide) throw new Error("Mot de passe incorrect");
       // Générer un token JWT
+      // const token = jwt.sign(payload, 'votre_clé_secrète', { expiresIn: '1h' });
       const token = jwt.sign(
         { id: utilisateur._id, role: utilisateur.role },
         process.env.JWT_SECRET,
@@ -73,7 +74,7 @@ class UtilisateurService {
   // Récupérer un utilisateur par son Id
   async getUtilisateurById(id) {
     try {
-      return await utilisateurRepository.findById(id);
+      return await this.utilisateurRepository.findById(id);
     } catch (err) {
       throw new Error(
         `Erreur lors de la récupération de l'utilisateur : ${err.message}`

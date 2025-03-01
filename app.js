@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import utilisateurRoutes from "./routes/routeUtilisateur.js";
@@ -15,8 +16,9 @@ dotenv.config();
 const app = express();
 
 // Middleware
-/* app.use(cors());  */ // Autoriser les requêtes cross-origin
+app.use(cors()); // Autoriser les requêtes cross-origin
 app.use(express.json()); // Parser les requêtes JSON
+app.use(cookieParser()); // Utiliser cookie-parser
 
 // Connexion à la base de données
 connectDB();

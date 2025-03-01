@@ -12,7 +12,7 @@ class UtilisateurRepository {
     }
   }
   // Trouver les utilisateurs
-  async findUtilisateurs() {
+  /*  async findUtilisateurs() {
     try {
       return await Utilisateur.find();
     } catch (err) {
@@ -21,7 +21,7 @@ class UtilisateurRepository {
       );
     }
   }
-
+ */
   // Trouver un utilisateur par email
   async findByEmail(email) {
     try {

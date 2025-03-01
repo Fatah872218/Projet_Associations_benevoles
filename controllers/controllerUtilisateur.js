@@ -46,14 +46,47 @@ class UtilisateurController {
             email,
             motDePasse
           );
+
+        // Envoyer le token dans un cookie:("token" cest le nom de cookie)
+        res.cookie("tokenA", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production", // Cookie sécurisé uniquement en production
+          sameSite: "strict",
+          expires: new Date(Date.now() + 36000),
+        });
         res
           .status(200)
           .json(
-            `nom:${utilisateur.nom}  prenom: ${utilisateur.prenom}, est connecté`
+            `nom:${utilisateur.nom}  prenom: ${utilisateur.prenom},id: ${utilisateur.id} est connecté`
           );
       } catch (err) {
         res.status(401).json({ message: err.message });
       }
+    }
+  }
+  // Récupérer l'utilisateur connecté
+  async getUtilisateur(req, res) {
+    try {
+      const utilisateur = await this.utilisateurService.getUtilisateurById(
+        req.body._id
+      );
+      res.status(200).json(utilisateur);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  }
+
+  // comment se deconnecter:
+  async deconnecter(req, res) {
+    try {
+      res.clearCookie("tokenA", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Cookie sécurisé uniquement en production
+        sameSite: "strict",
+      });
+      res.status(200).json({ message: "Déconnexion réussie" });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
   }
 }
