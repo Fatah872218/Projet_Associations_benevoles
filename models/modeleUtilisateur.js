@@ -13,6 +13,7 @@ const utilisateurSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  competences: { type: String },
   dateInscription: { type: Date, default: Date.now },
 });
 

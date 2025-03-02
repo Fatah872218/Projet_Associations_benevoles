@@ -44,7 +44,7 @@ class UtilisateurRepository {
     }
   }
   // Mettre à jour un utilisateur
-  async update(id, updateData) {
+  async updateU(id, updateData) {
     try {
       return await Utilisateur.findByIdAndUpdate(id, updateData, { new: true });
     } catch (err) {
@@ -55,7 +55,7 @@ class UtilisateurRepository {
   }
 
   // Supprimer un utilisateur
-  async delete(id) {
+  async deleteU(id) {
     try {
       return await Utilisateur.findByIdAndDelete(id);
     } catch (err) {

@@ -4,10 +4,9 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import utilisateurRoutes from "./routes/routeUtilisateur.js";
-/* import associationRoutes from "./routes/associationRoutes.js";
-import missionRoutes from "./routes/missionRoutes.js";
-import candidatureRoutes from "./routes/candidatureRoutes.js";
-import errorHandler from "./middlewares/errorHandler.js"; */
+import associationRoutes from "./routes/routeAssociation.js";
+
+//import errorHandler from "./middlewares/errorHandler.js";
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -25,9 +24,7 @@ connectDB();
 
 // Routes
 app.use("/api/utilisateurs", utilisateurRoutes);
-/* app.use("/api/associations", associationRoutes);
-app.use("/api/missions", missionRoutes);
-app.use("/api/candidatures", candidatureRoutes); */
+app.use("/api/associations", associationRoutes);
 
 // Middleware de gestion des erreurs
 /* app.use(errorHandler); */

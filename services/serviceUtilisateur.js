@@ -81,6 +81,26 @@ class UtilisateurService {
       );
     }
   }
+  // mise jour
+  async updateUtilisateur(id) {
+    try {
+      return await this.utilisateurRepository.updateU(id);
+    } catch (err) {
+      throw new Error(
+        `Erreur lors de la mise a jour de l'utilisateur : ${err.message}`
+      );
+    }
+  }
+  //supression:
+  async deleteUtilisateur(id) {
+    try {
+      return await this.utilisateurRepository.deleteU(id);
+    } catch (err) {
+      throw new Error(
+        `Erreur lors de la  supression de l'utilisateur : ${err.message}`
+      );
+    }
+  }
 }
 
 // Exporter la classe entière
