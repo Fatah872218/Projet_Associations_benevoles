@@ -1,0 +1,378 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "openeapi Association Benevoles",
+    "descriptionn": "API gestion des missions benevoles associations",
+    "contact": {
+      "name": "fatah DJ",
+      "email": "fatah_djeddi@yahoo.fr"
+    },
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api",
+      "description": "Serveur local Backend"
+    }
+  ],
+  "paths": {
+    "/utilisateurs/inscription": {
+      "post": {
+        "summary": "Inscription d'un utilisateur",
+        "description": "Permet à un utilisateur de s'inscrire (bénévole ou association)",
+        "tags": ["Utilisateurs"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UtilisateurInscription"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Utilisateur inscrit avec succès",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Utilisateur"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erreur de validation ou utilisateur déjà existant."
+          }
+        }
+      }
+    },
+    "/utilisateurs/connexion": {
+      "post": {
+        "summary": "Connexion d'un utilisateur",
+        "description": "Permet à un utilisateur de se connecter et de recevoir un token JWT.",
+        "tags": ["Utilisateurs"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UtilisateurConnexion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Connexion réussie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Utilisateur"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email ou mot de passe incorrect"
+          }
+        }
+      }
+    },
+    "/associations": {
+      "post": {
+        "summary": "Créer une association",
+        "description": "Permet à un utilisateur de type association de créer une association.",
+        "tags": ["Associations"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Association"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Association créée avec succès",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Association"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accès refusé (utilisateur non autorisé)"
+          }
+        }
+      }
+    },
+    "/missions": {
+      "post": {
+        "summary": "Créer une mission",
+        "description": "Permet à une association de créer une mission.",
+        "tags": ["Missions"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Mission créée avec succès",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mission"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accès refusé (utilisateur non autorisé)"
+          }
+        }
+      }
+    },
+    "/candidatures": {
+      "post": {
+        "summary": "Créer une candidature",
+        "description": "Permet à un bénévole de postuler à une mission.",
+        "tags": ["Candidatures"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Candidature"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Candidature créée avec succès",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Candidature"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Accès refusé (utilisateur non autorisé)"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "UtilisateurInscription": {
+        "type": "object",
+        "properties": {
+          "nom": {
+            "type": "string",
+            "example": "Martin"
+          },
+          "prenom": {
+            "type": "string",
+            "example": "Alice"
+          },
+          "email": {
+            "type": "string",
+            "example": "alice.martin@example.com"
+          },
+          "motDePasse": {
+            "type": "string",
+            "example": "password123"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["bénévole", "association"],
+            "example": "bénévole"
+          }
+        },
+        "required": ["nom", "prenom", "email", "motDePasse", "role"]
+      },
+      "UtilisateurConnexion": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "alice.martin@example.com"
+          },
+          "motDePasse": {
+            "type": "string",
+            "example": "password123"
+          }
+        },
+        "required": ["email", "motDePasse"]
+      },
+      "Utilisateur": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64f1a2b3c4d5e6f7a8b9c0d1"
+          },
+          "nom": {
+            "type": "string",
+            "example": "Martin"
+          },
+          "prenom": {
+            "type": "string",
+            "example": "Alice"
+          },
+          "email": {
+            "type": "string",
+            "example": "alice.martin@example.com"
+          },
+          "role": {
+            "type": "string",
+            "example": "bénévole"
+          },
+          "dateInscription": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-03-15T12:00:00.000Z"
+          }
+        }
+      },
+      "Association": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64f1a2b3c4d5e6f7a8b9c0d3"
+          },
+          "nomAssociation": {
+            "type": "string",
+            "example": "Green Earth"
+          },
+          "description": {
+            "type": "string",
+            "example": "Association pour la protection de l'environnement."
+          },
+          "utilisateurId": {
+            "type": "string",
+            "example": "64f1a2b3c4d5e6f7a8b9c0d2"
+          }
+        }
+      },
+      "Mission": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64f1a2b3c4d5e6f7a8b9c0d4"
+          },
+          "titre": {
+            "type": "string",
+            "example": "Nettoyage de plage"
+          },
+          "description": {
+            "type": "string",
+            "example": "Aider à nettoyer la plage de la ville."
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-20T09:00:00.000Z"
+          },
+          "associationId": {
+            "type": "string",
+            "example": "64f1a2b3c4d5e6f7a8b9c0d3"
+          },
+          "statut": {
+            "type": "string",
+            "enum": ["ouvert", "fermé"],
+            "example": "ouvert"
+          }
+        }
+      },
+      "Candidature": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64f1a2b3c4d5e6f7a8b9c0d5"
+          },
+          "missionId": {
+            "type": "string",
+            "example": "64f1a2b3c4d5e6f7a8b9c0d4"
+          },
+          "bénévoleId": {
+            "type": "string",
+            "example": "64f1a2b3c4d5e6f7a8b9c0d1"
+          },
+          "statut": {
+            "type": "string",
+            "enum": ["en attente", "acceptée", "refusée"],
+            "example": "en attente"
+          },
+          "message": {
+            "type": "string",
+            "example": "Bonjour madame,monsieur"
+          },
+          "dateCandidature": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-15T12:00:00.000Z"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Utilisateurs",
+      "description": "Gestion des utilisateurs"
+    },
+    {
+      "name": "Associations",
+      "description": "Gestion des associations"
+    },
+    {
+      "name": "Missions",
+      "description": "Gestion des missions"
+    },
+    {
+      "name": "Candidatures",
+      "description": "Gestion des candidatures"
+    }
+  ]
+}
