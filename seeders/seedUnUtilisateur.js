@@ -1,5 +1,5 @@
-import connectDB from "./config/db.js";
-import Utilisateur from "./models/modeleUtilisateur.js";
+import connectDB from "../config/db.js";
+import Utilisateur from "../models/modeleUtilisateur.js";
 
 connectDB();
 

@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
-import connectDB from "./config/db.js";
-import Utilisateur from "./models/modeleUtilisateur.js";
+import connectDB from "../config/db.js";
+import Utilisateur from "../models/modeleUtilisateur.js";
 
-import UtilisateurService from "./services/serviceUtilisateur.js";
+import UtilisateurService from "../services/serviceUtilisateur.js";
 
 // Charger les variables d'environnement
 dotenv.config();

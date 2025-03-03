@@ -16,6 +16,7 @@ const candidatureSchema = new mongoose.Schema({
     enum: ["en attente", "acceptée", "refusée"],
     default: "en attente",
   },
+  message: { type: String },
   dateCandidature: { type: Date, default: Date.now },
 });
 
