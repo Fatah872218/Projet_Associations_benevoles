@@ -54,7 +54,7 @@ class UtilisateurService {
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-      console.log("Token généré :", token);
+      /* console.log("Token généré :", token); */
       return { utilisateur, token };
     } catch (err) {
       throw new Error(

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const missionSchema = new mongoose.Schema({
   titre: { type: String, required: true },
   description: { type: String, required: true },
-  date: { type: Date, required: true },
+  date: { type: Date, default: Date.now() },
   associationId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Association",

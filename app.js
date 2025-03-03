@@ -5,7 +5,8 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import utilisateurRoutes from "./routes/routeUtilisateur.js";
 import associationRoutes from "./routes/routeAssociation.js";
-
+import missionRoutes from "./routes/routeMission.js";
+import candidatureRoutes from "./routes/routeCandidature.js";
 //import errorHandler from "./middlewares/errorHandler.js";
 
 // Charger les variables d'environnement
@@ -25,6 +26,8 @@ connectDB();
 // Routes
 app.use("/api/utilisateurs", utilisateurRoutes);
 app.use("/api/associations", associationRoutes);
+app.use("/api/missions", missionRoutes);
+app.use("/api/candidatures", candidatureRoutes);
 
 // Middleware de gestion des erreurs
 /* app.use(errorHandler); */

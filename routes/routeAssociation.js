@@ -1,11 +1,11 @@
 import express from "express";
 import AssociationController from "../controllers/controllerAssociation.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
-
+import authorisation from "../middlewares/autorisationMiddleware.js";
 const router = express.Router();
 const associationController = new AssociationController();
 // Créer une association
-router.post("/", authMiddleware, (req, res) =>
+router.post("/", authMiddleware, authorisation(["association"]), (req, res) =>
   associationController.createAssociation(req, res)
 );
 
@@ -20,13 +20,16 @@ router.get("/utilisateur/:utilisateurId", authMiddleware, (req, res) =>
 );
 
 // Mettre à jour une association
-router.put("/:id", authMiddleware, (req, res) =>
+router.put("/:id", authMiddleware, authorisation(["association"]), (req, res) =>
   associationController.update(req, res)
 );
 
 // Supprimer une association
-router.delete("/:id", authMiddleware, (req, res) =>
-  associationController.delete(req, res)
+router.delete(
+  "/:id",
+  authMiddleware,
+  authorisation(["association"]),
+  (req, res) => associationController.delete(req, res)
 );
 
 export default router;
